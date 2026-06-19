@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج عيادات الأسنان Dental X 🦷 - مازال دائري في دوائر الورق والبيروقراطية في إدارة عيادتك Dental؟</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Base ── */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0a1a;
+            color: #e8e0d0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        /* ── Ambient Background ── */
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bg-glow::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            animation: floatGlow 12s ease-in-out infinite alternate;
+        }
+        .bg-glow::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%);
+            bottom: -80px;
+            left: -80px;
+            animation: floatGlow 15s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.2); }
+        }
+
+        /* ── Container ── */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 24px 60px;
+        }
+
+        /* ── Referral Badge ── */
+        .referral-badge {
+            display: none;
+            background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 14px;
+            padding: 14px 20px;
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #d4af37;
+            animation: fadeInDown 0.6s ease;
+        }
+        .referral-badge.visible {
+            display: block;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Personalization Greeting ── */
+        .greeting {
+            display: none;
+            text-align: center;
+            font-size: 1.15rem;
+            color: #d4af37;
+            margin-bottom: 12px;
+            font-weight: 600;
+            animation: fadeInDown 0.5s ease;
+        }
+        .greeting.visible {
+            display: block;
+        }
+
+        /* ── Hero Section ── */
+        .hero {
+            text-align: center;
+            margin-bottom: 44px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37, #b8962e);
+            color: #0a0a1a;
+            padding: 6px 22px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: #a09880;
+            line-height: 1.7;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* ── Features Section ── */
+        .features-section {
+            margin-bottom: 44px;
+        }
+        .features-section h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #d4af37;
+            margin-bottom: 28px;
+        }
+        .features-grid {
+            display: grid;
+            gap: 16px;
+        }
+        .feature-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            border: 1px solid rgba(212,175,55,0.12);
+            border-radius: 16px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            border-color: rgba(212,175,55,0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212,175,55,0.08);
+        }
+        .feature-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212,175,55,0.1);
+            border-radius: 12px;
+        }
+        .feature-text h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f0e6d2;
+            margin-bottom: 4px;
+        }
+        .feature-text p {
+            font-size: 0.92rem;
+            color: #8a8070;
+            line-height: 1.6;
+        }
+
+        /* ── Countdown Timer ── */
+        .countdown-section {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .countdown-label {
+            font-size: 1rem;
+            color: #d4af37;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            direction: ltr;
+        }
+        .countdown-box {
+            background: linear-gradient(145deg, rgba(212,175,55,0.1), rgba(212,175,55,0.03));
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 14px;
+            padding: 14px 10px;
+            min-width: 72px;
+            text-align: center;
+        }
+        .countdown-box .num {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #d4af37;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        .countdown-box .unit {
+            font-size: 0.75rem;
+            color: #8a8070;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* ── CTA Button ── */
+        .cta-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 48px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.3);
+            animation: ctaPulse 2.5s ease-in-out infinite;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.45);
+        }
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 6px 30px rgba(37, 211, 102, 0.3); }
+            50% { box-shadow: 0 6px 40px rgba(37, 211, 102, 0.55); }
+        }
+
+        .cta-sub {
+            margin-top: 14px;
+            font-size: 0.9rem;
+            color: #6a6050;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 30px 0 10px;
+            border-top: 1px solid rgba(212,175,55,0.08);
+            color: #4a4a5a;
+            font-size: 0.85rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .container {
+                padding: 28px 16px 48px;
+            }
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .cta-btn {
+                padding: 16px 32px;
+                font-size: 1.1rem;
+            }
+            .countdown-box {
+                min-width: 60px;
+                padding: 12px 6px;
+            }
+            .countdown-box .num {
+                font-size: 1.5rem;
+            }
+        }
+
+        
+        /* ── Viral Sharing Modal ── */
+        .viral-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+        }
+        .viral-overlay.active {
+            display: flex;
+        }
+        .viral-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 24px 24px 12px 12px;
+            padding: 40px 32px 32px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            box-shadow: 0 -8px 40px rgba(212, 175, 55, 0.15), 0 0 80px rgba(0,0,0,0.5);
+        }
+        .viral-overlay.active .viral-card {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .viral-close {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        .viral-close:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        .viral-emoji {
+            font-size: 56px;
+            margin-bottom: 16px;
+            animation: bounceGift 2s ease-in-out infinite;
+        }
+        @keyframes bounceGift {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(-5deg); }
+            75% { transform: translateY(-4px) rotate(5deg); }
+        }
+        .viral-text {
+            color: #f0e6d2;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-weight: 600;
+        }
+        .viral-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .viral-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .viral-btn-wa {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+        }
+        .viral-btn-wa:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(37, 211, 102, 0.5);
+        }
+        .viral-btn-copy {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3);
+        }
+        .viral-btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(33, 150, 243, 0.45);
+        }
+        .viral-hint {
+            color: #25d366;
+            font-size: 0.9rem;
+            margin-top: 14px;
+            min-height: 1.2em;
+            transition: opacity 0.3s;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <div class="container">
+
+        <!-- Referral Badge -->
+        <div class="referral-badge" id="referralBadge">
+            أنت مدعو من صديق! &#127881;
+        </div>
+
+        <!-- Personalization Greeting -->
+        <div class="greeting" id="shopGreeting"></div>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">&#128640; عرض حصري لفترة محدودة</div>
+            <h1>مازال دائري في دوائر الورق والبيروقراطية في إدارة عيادتك Dental؟</h1>
+            <p class="subtitle">
+                برنامج عيادات الأسنان Dental X 🦷 - الحل الذكي اللي يخليك تركز على شغلك وتنسى التعقيدات.
+            </p>
+        </section>
+
+        <!-- Features -->
+        <section class="features-section">
+            <h2>&#10024; ليش برنامج عيادات الأسنان Dental X 🦷؟</h2>
+            <div class="features-grid">
+                <div class="feature"><div class="f-icon">📈</div><div class="f-text"><h4></h4><p>تتبع المرضى بسهولة وسرعة</p></div></div><div class="feature"><div class="f-icon">📊</div><div class="f-text"><h4></h4><p>إدارة الماليات والفواتير بضغطة زر</p></div></div><div class="feature"><div class="f-icon">📝</div><div class="f-text"><h4></h4><p>تسجيل الملاحظات الطبية بكل سهولة</p></div></div><div class="feature"><div class="f-icon">📅</div><div class="f-text"><h4></h4><p>تحديد المواعيد بسهولة وبدقة</p></div></div>
+            </div>
+        </section>
+
+        <!-- Countdown -->
+        <section class="countdown-section">
+            <p class="countdown-label">&#9203; العرض ينتهي خلال:</p>
+            <div class="countdown-boxes">
+                <div class="countdown-box">
+                    <div class="num" id="cdSec">00</div>
+                    <div class="unit">ثانية</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="num" id="cdMin">00</div>
+                    <div class="unit">دقيقة</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="num" id="cdHr">00</div>
+                    <div class="unit">ساعة</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <a class="cta-btn" id="ctaBtn" href="#" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.589-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.068-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.325-.336-.445-.342-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                </svg>
+                طلب نسخة تجريبية الآن!
+            </a>
+            <p class="cta-sub">&#128274; مجاناً - بدون التزام - تجربة فورية</p>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            &copy; برنامج عيادات الأسنان Dental X 🦷 &mdash; جميع الحقوق محفوظة
+        </div>
+    </div>
+
+    
+    <!-- Viral Sharing Modal -->
+    <div id="viralOverlay" class="viral-overlay">
+        <div class="viral-card">
+            <button class="viral-close" id="viralClose">&times;</button>
+            <div class="viral-emoji">&#127873;</div>
+            <p class="viral-text">شارك مع 3 أصحاب محلات واحصل على تخفيض 20%! 🎁</p>
+            <div class="viral-buttons">
+                <button class="viral-btn viral-btn-wa" id="viralShareWa">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:middle;margin-left:8px;">
+                        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.589-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.068-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.325-.336-.445-.342-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                    </svg>
+                    شارك عبر واتساب
+                </button>
+                <button class="viral-btn viral-btn-copy" id="viralCopyLink">
+                    &#128203; نسخ الرابط
+                </button>
+            </div>
+            <p class="viral-hint" id="copyFeedback"></p>
+        </div>
+    </div>
+        
+
+    <script>
+    (function() {
+        // ── Visitor ID ──
+        function getVisitorId() {
+            var vid = localStorage.getItem('bait_visitor_id');
+            if (!vid) {
+                vid = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 9);
+                localStorage.setItem('bait_visitor_id', vid);
+            }
+            return vid;
+        }
+
+        // ── Webhook Tracking ──
+        
+        function sendTrack(action, extra) {}
+        
+
+        // ── URL Params ──
+        var params = new URLSearchParams(window.location.search);
+        var refId = params.get('ref');
+        var level = params.get('level');
+        var shopName = params.get('n');
+
+        // ── Referral Badge ──
+        if (refId) {
+            document.getElementById('referralBadge').classList.add('visible');
+        }
+
+        // ── Shop Greeting ──
+        if (shopName) {
+            var greetEl = document.getElementById('shopGreeting');
+            greetEl.textContent = '👋 أهلاً يا ' + decodeURIComponent(shopName) + '!';
+            greetEl.classList.add('visible');
+        }
+
+        // ── Track Visit ──
+        sendTrack('visit');
+
+        // ── Countdown Timer (24h from first visit) ──
+        var CD_KEY = 'bait_cd_end';
+        var cdEnd = localStorage.getItem(CD_KEY);
+        if (!cdEnd) {
+            cdEnd = Date.now() + 24 * 60 * 60 * 1000;
+            localStorage.setItem(CD_KEY, cdEnd.toString());
+        } else {
+            cdEnd = parseInt(cdEnd, 10);
+        }
+
+        function updateCountdown() {
+            var diff = Math.max(0, cdEnd - Date.now());
+            var hrs = Math.floor(diff / 3600000);
+            var mins = Math.floor((diff % 3600000) / 60000);
+            var secs = Math.floor((diff % 60000) / 1000);
+            document.getElementById('cdHr').textContent = hrs.toString().padStart(2, '0');
+            document.getElementById('cdMin').textContent = mins.toString().padStart(2, '0');
+            document.getElementById('cdSec').textContent = secs.toString().padStart(2, '0');
+            if (diff > 0) {
+                requestAnimationFrame(function() {
+                    setTimeout(updateCountdown, 1000);
+                });
+            }
+        }
+        updateCountdown();
+
+        // ── WhatsApp CTA ──
+        var ctaBtn = document.getElementById('ctaBtn');
+        var waMsg = encodeURIComponent('مرحباً، أبغى أجرّب برنامج عيادات الأسنان Dental X 🦷 - النسخة التجريبية! 🚀');
+        ctaBtn.href = 'https://wa.me/?text=' + waMsg;
+        ctaBtn.addEventListener('click', function() {
+            sendTrack('click_wa');
+        });
+
+        // ── Viral Modal JS ──
+        
+        // ── Viral Modal Logic ──
+        (function() {
+            var MODAL_DISMISS_KEY = 'viral_modal_dismissed_ts';
+            var overlay = document.getElementById('viralOverlay');
+            var closeBtn = document.getElementById('viralClose');
+            var shareWaBtn = document.getElementById('viralShareWa');
+            var copyBtn = document.getElementById('viralCopyLink');
+            var feedback = document.getElementById('copyFeedback');
+
+            function shouldShowModal() {
+                var dismissed = localStorage.getItem(MODAL_DISMISS_KEY);
+                if (!dismissed) return true;
+                var elapsed = Date.now() - parseInt(dismissed, 10);
+                return elapsed > 24 * 60 * 60 * 1000;
+            }
+
+            function showModal() {
+                if (!shouldShowModal()) return;
+                overlay.classList.add('active');
+            }
+
+            function hideModal() {
+                overlay.classList.remove('active');
+                localStorage.setItem(MODAL_DISMISS_KEY, Date.now().toString());
+            }
+
+            function getShareUrl() {
+                var vid = getVisitorId();
+                var params = new URLSearchParams(window.location.search);
+                var currentLevel = parseInt(params.get('level') || '0', 10);
+                var base = window.location.origin + window.location.pathname;
+                return base + '?ref=' + vid + '&level=' + (currentLevel + 1);
+            }
+
+            closeBtn.addEventListener('click', hideModal);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) hideModal();
+            });
+
+            shareWaBtn.addEventListener('click', function() {
+                sendTrack('share', { method: 'whatsapp' });
+                var shareUrl = getShareUrl();
+                var text = encodeURIComponent('جرّب برنامج عيادات الأسنان Dental X 🦷 - أداة رهيبة! 🔥 ' + shareUrl);
+                window.open('https://wa.me/?text=' + text, '_blank');
+            });
+
+            copyBtn.addEventListener('click', function() {
+                sendTrack('share', { method: 'copy_link' });
+                var shareUrl = getShareUrl();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(shareUrl).then(function() {
+                        feedback.textContent = '✅ تم نسخ الرابط!';
+                        setTimeout(function() { feedback.textContent = ''; }, 3000);
+                    }).catch(function() {
+                        fallbackCopy(shareUrl);
+                    });
+                } else {
+                    fallbackCopy(shareUrl);
+                }
+            });
+
+            function fallbackCopy(text) {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    feedback.textContent = '✅ تم نسخ الرابط!';
+                } catch(e) {
+                    feedback.textContent = '❌ فشل النسخ، انسخ يدوياً';
+                }
+                document.body.removeChild(ta);
+                setTimeout(function() { feedback.textContent = ''; }, 3000);
+            }
+
+            setTimeout(showModal, 15000);
+        })();
+        
+    })();
+    </script>
+
+</body>
+</html>
